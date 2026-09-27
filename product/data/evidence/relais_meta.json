@@ -1,0 +1,12 @@
+{
+  "buyer_id": "relais",
+  "buyer_name": "Relais Group Plc",
+  "source_url": "https://relais.fi/en/investors/acquisitions/",
+  "retrieved_at": "2026-09-26T14:54:39.392056+00:00",
+  "http_status": null,
+  "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1006)>",
+  "verified_tls": false,
+  "raw_file": null,
+  "extracted_file": null,
+  "supported_criteria": []
+}

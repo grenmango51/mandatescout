@@ -1,0 +1,43 @@
+{
+  "buyer_id": "indutrade",
+  "buyer_name": "Indutrade AB (publ)",
+  "source_url": "https://www.indutrade.com/entrepreneurs/how-we-work/",
+  "anchor": "",
+  "retrieved_at": "2026-09-26T14:54:38.511434+00:00",
+  "http_status": 200,
+  "sha256": "46d2f601bff30f476d453160b9420727be73b1d724e3c3b25fa1ccb644cb452e",
+  "bytes_length": 92958,
+  "raw_file": "indutrade_raw.html",
+  "extracted_file": "indutrade_extracted.txt",
+  "verified_tls": true,
+  "supported_criteria": [
+    {
+      "id": "ind-crit-turnover",
+      "label": "Annual Sales SEK 50-200M",
+      "kind": "financial_size",
+      "source_excerpt": "A typical Indutrade company generates annual sales of between SEK 50-200 million \u2013 an amount that enables each MD to maintain overall control and quickly adapt the business to customer requirements.",
+      "source_url": "https://www.indutrade.com/entrepreneurs/how-we-work/"
+    },
+    {
+      "id": "ind-crit-ownership",
+      "label": "Decentralised & No Exit Strategy",
+      "kind": "ownership_model",
+      "source_excerpt": "In our acquisition model, acquired companies retain their name, culture and management when they become part of the Group. Indutrade has no exit strategy and by selling to Indutrade, the company's future is secured.",
+      "source_url": "https://www.indutrade.com/entrepreneurs/how-we-work/"
+    },
+    {
+      "id": "ind-crit-qualitative",
+      "label": "Niche Leadership & Technical Expertise",
+      "kind": "operational_fit",
+      "source_excerpt": "In addition to meeting requirements for financial performance, the acquired companies must also have a highly skilled management team, be characterised by a genuine entrepreneurial spirit and possess deep technical expertise. They should preferably hold a leading position in their own particular niche.",
+      "source_url": "https://www.indutrade.com/entrepreneurs/how-we-work/"
+    },
+    {
+      "id": "ind-crit-scope",
+      "label": "Proprietary Products or Technical Sales",
+      "kind": "business_model",
+      "source_excerpt": "We strive for a balance between companies that primarily conduct sales of technological solutions, and companies with their own products and brands. The proportion of Group companies with proprietary products has gradually grown and now accounts for 40% of consolidated net sales.",
+      "source_url": "https://www.indutrade.com/entrepreneurs/how-we-work/"
+    }
+  ]
+}

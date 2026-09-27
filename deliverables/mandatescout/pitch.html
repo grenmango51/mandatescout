@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MandateScout · Pitch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --font-sans: "Geist", "Plus Jakarta Sans", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+      --font-mono: "Geist Mono", "JetBrains Mono", "Cascadia Mono", ui-monospace, Consolas, monospace;
+
+      --canvas: #f5f5f5;
+      --frame: #ffffff;
+      --chrome: #fafafa;
+      --border: #e5e5e5;
+      --border-strong: #d4d4d4;
+      --fg: #0a0a0a;
+      --fg-2: #525252;
+      --fg-3: #737373;
+      --ink: #171717;
+      --ink-fg: #ffffff;
+      --accent: #f76b15;
+      --accent-text: #c2410c;
+      --accent-soft: #fff4ec;
+
+      --ok-bg: #effaf3;  --ok-fg: #15613a;  --ok-dot: #16a34a;  --ok-ring: rgba(22, 163, 74, 0.2);
+      --warn-bg: #fdf6e7; --warn-fg: #8a4b06; --warn-dot: #d97706; --warn-ring: rgba(217, 119, 6, 0.22);
+      --mute-bg: #f4f4f4; --mute-fg: #525252; --mute-dot: #a3a3a3; --mute-ring: rgba(0, 0, 0, 0.08);
+      --flag-bg: #fdf0f0; --flag-fg: #9b1c1c; --flag-dot: #dc2626; --flag-ring: rgba(220, 38, 38, 0.2);
+
+      --h-controls: 48px;
+    }
+
+    [data-theme="dark"] {
+      --canvas: #050505;
+      --frame: #0a0a0a;
+      --chrome: #111111;
+      --border: #262626;
+      --border-strong: #363636;
+      --fg: #fafafa;
+      --fg-2: #a3a3a3;
+      --fg-3: #8a8a8a;
+      --ink: #fafafa;
+      --ink-fg: #0a0a0a;
+      --accent: #ff802b;
+      --accent-text: #ff9a52;
+      --accent-soft: rgba(255, 128, 43, 0.1);
+
+      --ok-bg: rgba(34, 197, 94, 0.1);   --ok-fg: #7ee2a8;  --ok-dot: #22c55e;  --ok-ring: rgba(34, 197, 94, 0.22);
+      --warn-bg: rgba(245, 158, 11, 0.1); --warn-fg: #fcc865; --warn-dot: #f59e0b; --warn-ring: rgba(245, 158, 11, 0.22);
+      --mute-bg: rgba(255, 255, 255, 0.05); --mute-fg: #b4b4b4; --mute-dot: #737373; --mute-ring: rgba(255, 255, 255, 0.08);
+      --flag-bg: rgba(239, 68, 68, 0.1);  --flag-fg: #fca5a5; --flag-dot: #ef4444; --flag-ring: rgba(239, 68, 68, 0.24);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--fg);
+      background: var(--canvas);
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    button:disabled { opacity: 0.4; cursor: default; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    a { color: inherit; }
+    ul, ol { list-style: none; }
+    .mono { font-family: var(--font-mono); }
+    code { font-family: var(--font-mono); font-size: 0.92em; padding: 0 4px; border: 1px solid var(--border); border-radius: 3px; background: var(--chrome); }
+
+    /* ── Stage: fixed 16:9 frame scaled to the viewport ─────────────────── */
+    .viewport { position: relative; flex: 1; min-height: 0; display: grid; place-items: center; overflow: hidden; }
+    .stage { width: 1280px; height: 720px; transform-origin: center center; transform: scale(var(--k, 1)); flex-shrink: 0; }
+    .slide { display: none; width: 100%; height: 100%; }
+    .slide.active { display: block; }
+    .frame {
+      position: relative; width: 100%; height: 100%;
+      display: grid; grid-template-rows: 44px minmax(0, 1fr) 40px;
+      background: var(--frame);
+      border: 1px solid var(--border-strong);
+      box-shadow: 0 24px 64px -24px rgba(0, 0, 0, 0.18);
+      animation: enter 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes enter { from { opacity: 0.6; transform: translateY(4px); } }
+
+    .frame-top, .frame-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--fg-3);
+    }
+    .frame-top { border-bottom: 1px solid var(--border); background: var(--chrome); }
+    .frame-foot { border-top: 1px solid var(--border); text-transform: none; letter-spacing: 0; font-family: var(--font-sans); font-size: 12px; }
+    .frame-foot .mono { font-family: var(--font-mono); font-size: 11px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); letter-spacing: 0.14em; }
+    .brand-mark {
+      display: inline-grid; place-items: center; width: 20px; height: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0;
+      color: var(--ink-fg); background: var(--ink); border-radius: 3px;
+      box-shadow: inset 0 -2px 0 var(--accent);
+    }
+    .brand b { font-family: var(--font-sans); font-weight: 600; letter-spacing: -0.01em; text-transform: none; font-size: 13px; }
+    .brand .sep { color: var(--fg-3); }
+    .section-no { color: var(--accent-text); }
+
+    .body { padding: 48px 48px 32px; display: flex; flex-direction: column; min-height: 0; }
+    .eyebrow { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); }
+    .title { margin-top: 12px; font-size: 48px; font-weight: 600; letter-spacing: -0.035em; line-height: 1.05; max-width: 20ch; }
+    .title-sm { font-size: 40px; max-width: 28ch; }
+    .lede { margin-top: 16px; font-size: 20px; line-height: 1.4; color: var(--fg-2); max-width: 44ch; }
+    .content { margin-top: 40px; flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .content.center { justify-content: center; padding-bottom: 32px; }
+
+    /* Column system: hairline-separated, no nested cards */
+    .cols { display: grid; border-top: 1px solid var(--ink); }
+    .cols-2 { grid-template-columns: 1fr 1fr; }
+    .cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .col { padding: 20px 24px 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+    .col:first-child { padding-left: 0; }
+    .col:last-child { border-right: 0; padding-right: 0; }
+    .col-no { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--accent-text); }
+    .col-title { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+    .col-text { font-size: 16px; line-height: 1.45; color: var(--fg-2); }
+    .col-foot { margin-top: auto; padding: 16px 0 4px; }
+
+    .pill {
+      --p-bg: var(--mute-bg); --p-fg: var(--mute-fg); --p-dot: var(--mute-dot); --p-ring: var(--mute-ring);
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 24px; padding: 0 10px 0 8px;
+      font-size: 12px; font-weight: 500; line-height: 1;
+      color: var(--p-fg); background: var(--p-bg); box-shadow: inset 0 0 0 1px var(--p-ring);
+      border-radius: 999px; white-space: nowrap;
+    }
+    .pill i { width: 6px; height: 6px; border-radius: 50%; background: var(--p-dot); }
+    .pill-ok   { --p-bg: var(--ok-bg);   --p-fg: var(--ok-fg);   --p-dot: var(--ok-dot);   --p-ring: var(--ok-ring); }
+    .pill-warn { --p-bg: var(--warn-bg); --p-fg: var(--warn-fg); --p-dot: var(--warn-dot); --p-ring: var(--warn-ring); }
+    .pill-flag { --p-bg: var(--flag-bg); --p-fg: var(--flag-fg); --p-dot: var(--flag-dot); --p-ring: var(--flag-ring); }
+    .pill-sm { height: 18px; font-size: 10.5px; padding: 0 7px 0 6px; }
+
+    /* ── App mock (mirrors product/static) ─────────────────────────────── */
+    .mock { border: 1px solid var(--border-strong); border-radius: 8px; overflow: hidden; background: var(--frame); }
+    .mock-top { display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 12px; border-bottom: 1px solid var(--border); }
+    .mock-top .brand-mark { width: 18px; height: 18px; font-size: 10px; }
+    .mock-search {
+      flex: 1; display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 4px 0 10px;
+      border: 1px solid var(--border-strong); border-radius: 6px; font-size: 12px; color: var(--fg);
+    }
+    .mock-search svg { width: 12px; height: 12px; stroke: var(--fg-3); fill: none; stroke-width: 2; flex-shrink: 0; }
+    .mock-search span { flex: 1; }
+    .mock-search b { height: 22px; padding: 0 10px; display: inline-flex; align-items: center; border-radius: 4px; background: var(--ink); color: var(--ink-fg); font-size: 11px; font-weight: 600; }
+    .mock-sum { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 40px; padding: 0 14px; font-size: 12px; color: var(--fg-2); border-bottom: 1px solid var(--border); }
+    .mock-sum strong { color: var(--fg); font-weight: 600; }
+    .mock-seg { display: inline-flex; padding: 2px; border-radius: 6px; background: var(--chrome); box-shadow: inset 0 0 0 1px var(--border); font-size: 11px; }
+    .mock-seg span { padding: 3px 8px; border-radius: 4px; color: var(--fg-3); }
+    .mock-seg span.on { background: var(--frame); color: var(--fg); box-shadow: 0 0 0 1px var(--border-strong); }
+    .mini { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: 12px; }
+    .mini th { height: 30px; padding: 0 12px; text-align: left; font-size: 11px; font-weight: 500; color: var(--fg-3); border-bottom: 1px solid var(--border); }
+    .mini td { height: 38px; padding: 0 12px; border-bottom: 1px solid var(--border); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--fg-2); }
+    .mini tr:last-child td { border-bottom: 0; }
+    .mini td.n { color: var(--fg); font-weight: 500; }
+    .flagtag { display: inline-flex; align-items: center; gap: 4px; margin-left: 6px; padding: 1px 6px; border-radius: 999px; font-size: 10px; font-weight: 500; color: var(--flag-fg); background: var(--flag-bg); vertical-align: 1px; }
+    .flagtag::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--flag-dot); }
+    .dot { display: inline-block; width: 6px; height: 6px; margin-right: 6px; border-radius: 50%; background: var(--mute-dot); vertical-align: 1px; }
+    .dot.ok { background: var(--ok-dot); }
+    .dot.warn { background: var(--warn-dot); }
+    .bars { display: inline-flex; gap: 2px; margin-right: 6px; vertical-align: -1px; }
+    .bars i { width: 5px; height: 10px; border-radius: 1px; background: var(--border-strong); }
+    .bars i.on { background: var(--accent); }
+    .hit { color: var(--fg); font-weight: 600; }
+    .mock-cap { padding: 10px 2px 0; font-size: 12px; color: var(--fg-3); }
+
+    /* Slide 1 hero split */
+    .hero { display: grid; grid-template-columns: 1fr 640px; gap: 48px; align-items: start; }
+
+    /* Slide 2 */
+    .qlist { border-top: 1px solid var(--border); }
+    .qlist li { display: grid; grid-template-columns: 48px 1fr; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--border); font-size: 26px; font-weight: 500; letter-spacing: -0.015em; }
+    .qlist li span:first-child { font-family: var(--font-mono); font-size: 13px; color: var(--accent-text); }
+    .statement { font-size: 40px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.15; max-width: 16ch; }
+    .callout { margin-top: 24px; padding: 16px 20px; border-left: 3px solid var(--accent); background: var(--accent-soft); font-size: 18px; line-height: 1.45; color: var(--fg); }
+
+    /* Slide 3 steps */
+    .steps .col { position: relative; padding-top: 24px; gap: 12px; }
+    .steps .col:not(:last-child)::after {
+      content: "→"; position: absolute; top: 20px; right: -10px; width: 20px; text-align: center;
+      font-family: var(--font-mono); font-size: 15px; color: var(--accent-text); background: var(--frame);
+    }
+    .step-no { font-family: var(--font-mono); font-size: 56px; font-weight: 500; letter-spacing: -0.04em; line-height: 1; color: var(--accent); }
+    .steps .col-title { font-size: 24px; }
+    .steps .col-text { font-size: 18px; }
+    .ex { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); }
+
+    /* Slide 4 proof */
+    .proof { display: grid; grid-template-columns: 520px 1fr; gap: 56px; align-items: start; }
+    .dmock { border: 1px solid var(--border-strong); border-radius: 8px; overflow: hidden; background: var(--frame); font-size: 12px; }
+    .dmock-head { padding: 14px 18px 12px; border-bottom: 1px solid var(--border); }
+    .dmock-head b { display: block; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+    .dmock-head span { color: var(--fg-3); }
+    .dmock-body { padding: 14px 18px 16px; display: flex; flex-direction: column; gap: 12px; }
+    .dflag { padding: 10px 12px; border-radius: 6px; background: var(--flag-bg); color: var(--flag-fg); line-height: 1.4; }
+    .dlabel { font-size: 11px; font-weight: 500; color: var(--fg-3); }
+    .dquote { padding-left: 10px; border-left: 2px solid var(--accent); line-height: 1.45; color: var(--fg); }
+    .dquote em { display: block; margin-top: 2px; font-style: normal; color: var(--fg-3); }
+    .dsrc { margin-top: 4px; color: var(--fg-3); }
+    .dsrc u { text-underline-offset: 2px; text-decoration-color: var(--border-strong); }
+    .tags { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .tags .k { width: 64px; color: var(--fg-3); }
+    .tag { padding: 2px 8px; border-radius: 4px; font-size: 11px; box-shadow: inset 0 0 0 1px var(--border-strong); color: var(--fg-3); }
+    .tag.on { color: var(--ok-fg); background: var(--ok-bg); box-shadow: inset 0 0 0 1px var(--ok-ring); }
+    .side-h { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; color: var(--fg-3); text-transform: uppercase; font-family: var(--font-mono); }
+    .checks { margin-top: 12px; border-top: 1px solid var(--ink); }
+    .checks li { display: grid; grid-template-columns: 28px 1fr; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 20px; font-weight: 500; letter-spacing: -0.015em; }
+    .checks li::before { content: "✓"; font-size: 16px; color: var(--ok-dot); }
+    .unknown-list { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .unknown-list .pill { height: 30px; padding: 0 14px 0 12px; font-size: 14px; }
+    .side-note { margin-top: 12px; font-size: 16px; color: var(--fg-2); }
+
+    /* Slide 5 buyers */
+    .table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 16px; border-top: 1px solid var(--ink); }
+    .table th { height: 40px; padding: 0 16px; text-align: left; font-size: 12px; font-weight: 500; color: var(--fg-3); border-bottom: 1px solid var(--border-strong); }
+    .table th:first-child, .table td:first-child { padding-left: 0; }
+    .table td { height: 60px; padding: 0 16px; border-bottom: 1px solid var(--border); color: var(--fg-2); }
+    .table td.name { color: var(--fg); font-weight: 600; white-space: nowrap; }
+    .table td.size { font-family: var(--font-mono); font-size: 14px; color: var(--fg); white-space: nowrap; }
+    .table tr.muted td { color: var(--fg-3); }
+
+    /* Slide 6 metrics */
+    .metrics { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--border); }
+    .metric { padding: 16px 20px 16px 0; border-right: 1px solid var(--border); }
+    .metric + .metric { padding-left: 20px; }
+    .metric:last-child { border-right: 0; }
+    .metric dt { font-size: 13px; color: var(--fg-3); }
+    .metric dd { margin-top: 6px; font-family: var(--font-mono); font-size: 44px; font-weight: 500; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+    .metric dd small { font-size: 20px; color: var(--fg-3); margin-left: 2px; }
+    .metric.accent dd { color: var(--accent-text); }
+    .metrics-cap { padding: 8px 0 0; font-size: 13px; color: var(--fg-3); }
+    .cols-tight { margin-top: 32px; }
+    .rows { border-top: 1px solid var(--border); }
+    .rows li { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 16px; color: var(--fg-2); }
+    .rows li b { color: var(--fg); font-weight: 600; }
+    .rows.plain li { grid-template-columns: 20px 1fr; }
+    .rows.plain li::before { content: "→"; font-family: var(--font-mono); font-size: 13px; color: var(--accent-text); }
+
+    /* Speaker notes panel */
+    .notes { display: none; }
+    .notes-panel {
+      flex-shrink: 0; max-height: 32vh; overflow-y: auto; padding: 16px 24px;
+      font-size: 14px; line-height: 1.6; color: var(--fg-2);
+      background: var(--frame); border-top: 1px solid var(--border-strong);
+    }
+    .notes-panel .notes-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 8px; }
+    .notes-panel p + p { margin-top: 8px; }
+    .notes-panel strong { color: var(--fg); }
+    .notes-panel a { color: var(--fg); text-decoration-color: var(--border-strong); text-underline-offset: 2px; }
+    .notes-panel a:hover { color: var(--accent-text); }
+    .hidden { display: none !important; }
+
+    /* Controls */
+    .controls {
+      flex-shrink: 0; height: var(--h-controls);
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px;
+      padding: 0 16px; background: var(--chrome); border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--fg-2);
+    }
+    .ctrl-group { display: flex; align-items: center; gap: 4px; }
+    .ctrl-group.right { justify-content: flex-end; }
+    .ctrl {
+      display: inline-flex; align-items: center; gap: 8px; height: 28px; padding: 0 10px;
+      font-size: 12px; font-weight: 500; color: var(--fg-2);
+      border: 1px solid transparent; border-radius: 4px;
+    }
+    .ctrl:hover:not(:disabled) { color: var(--fg); background: var(--frame); border-color: var(--border); }
+    .ctrl[aria-pressed="true"] { color: var(--accent-text); }
+    .kbd {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 18px; height: 18px; padding: 0 4px;
+      font-family: var(--font-mono); font-size: 10px; color: var(--fg-3);
+      background: var(--frame); border: 1px solid var(--border-strong); border-bottom-width: 2px; border-radius: 3px;
+    }
+    .ctrl[aria-pressed="true"] .kbd { color: var(--accent-text); border-color: currentColor; }
+    .progress { display: flex; gap: 4px; }
+    .seg { width: 40px; height: 16px; display: grid; align-items: center; }
+    .seg::before { content: ""; height: 2px; background: var(--border-strong); transition: background-color 0.15s; }
+    .seg:hover::before { background: var(--fg-3); }
+    .seg.done::before { background: var(--fg-2); }
+    .seg.active::before { background: var(--accent); height: 3px; }
+    .counter { font-family: var(--font-mono); font-size: 12px; color: var(--fg); margin-right: 8px; font-variant-numeric: tabular-nums; }
+
+    /* Print: one landscape page per slide; notes print only when toggled on */
+    @media print {
+      @page { size: 1280px 720px; margin: 0; }
+      html, body { height: auto; overflow: visible; background: #fff; }
+      .controls, .notes-panel { display: none !important; }
+      .viewport { display: block; overflow: visible; }
+      .stage { transform: none !important; width: 1280px; height: auto; }
+      .slide { display: block !important; width: 1280px; height: auto; }
+      .frame { height: 720px; box-shadow: none; border: 0; animation: none; break-after: page; page-break-after: always; }
+      body.show-notes .notes { display: block; padding: 48px 64px; font-size: 16px; line-height: 1.6; break-after: page; page-break-after: always; }
+      body.show-notes .notes .notes-title { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+      body.show-notes .notes p + p { margin-top: 10px; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .frame { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="viewport" id="viewport">
+    <div class="stage" id="stage">
+
+      <!-- ── 01 ─────────────────────────────────────────────────────────── -->
+      <section class="slide active" data-index="1" aria-label="Slide 1: Find Finnish companies worth pitching to a buyer">
+        <div class="frame">
+          <header class="frame-top">
+            <span class="brand"><span class="brand-mark">M</span>MERGERO <span class="sep">/</span> <b>MandateScout</b></span>
+            <span><span class="section-no">01</span> — What it is</span>
+          </header>
+          <div class="body">
+            <div class="hero">
+              <div>
+                <span class="eyebrow">MandateScout</span>
+                <h1 class="title">Find Finnish companies worth pitching to a buyer</h1>
+                <p class="lede">Type what a buyer wants. Get real companies, with proof from their own websites.</p>
+              </div>
+              <figure aria-label="The app, showing a real saved search">
+                <div class="mock">
+                  <div class="mock-top">
+                    <span class="brand-mark">M</span>
+                    <div class="mock-search">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                      <span>Finnish cloud software companies</span>
+                      <b>Search</b>
+                    </div>
+                  </div>
+                  <div class="mock-sum">
+                    <span><strong>10 companies</strong> · 4 websites read · 1 with word matches</span>
+                    <span class="mock-seg"><span>Matches 1</span><span class="on">All 10</span></span>
+                  </div>
+                  <table class="mini">
+                    <colgroup><col style="width:46%"><col style="width:15%"><col style="width:20%"><col style="width:19%"></colgroup>
+                    <thead><tr><th>Company</th><th>City</th><th>Website</th><th>Word matches</th></tr></thead>
+                    <tbody>
+                      <tr><td class="n">Cloud Center Finland Oy<span class="flagtag">Check ownership</span></td><td>Lahti</td><td><span class="dot ok"></span>cloudcenter.fi</td><td class="hit"><span class="bars"><i class="on"></i><i class="on"></i><i></i><i></i></span>2 of 4</td></tr>
+                      <tr><td class="n">Cloud9 Oy</td><td>Espoo</td><td><span class="dot ok"></span>cloud9.fi</td><td><span class="bars"><i></i><i></i><i></i><i></i></span>0 of 4</td></tr>
+                      <tr><td class="n">Mindpolis Group Oy</td><td>Tampere</td><td><span class="dot ok"></span>mindpolis.com</td><td><span class="bars"><i></i><i></i><i></i><i></i></span>0 of 4</td></tr>
+                      <tr><td class="n">Cloudia Oy</td><td>Helsinki</td><td><span class="dot warn"></span>cloudia.fi</td><td><span class="dot warn"></span>Unread</td></tr>
+                      <tr><td class="n">ITC Holding Oy</td><td>Rovaniemi</td><td><span class="dot"></span>None</td><td>—</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <figcaption class="mock-cap">A real saved search, 26 Sep 2026. Five of ten rows shown.</figcaption>
+              </figure>
+            </div>
+            <div class="content">
+              <div class="cols cols-3">
+                <div class="col">
+                  <span class="col-no">01</span>
+                  <h2 class="col-title">Real companies</h2>
+                  <p class="col-text">From the official Finnish company register.</p>
+                </div>
+                <div class="col">
+                  <span class="col-no">02</span>
+                  <h2 class="col-title">Proof attached</h2>
+                  <p class="col-text">Quotes and links from each company’s website.</p>
+                </div>
+                <div class="col">
+                  <span class="col-no">03</span>
+                  <h2 class="col-title">Ready to share</h2>
+                  <p class="col-text">Pick companies. Export a report or spreadsheet.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="frame-foot"><span>Data: Finnish Trade Register (PRH) and company websites</span><span class="mono">01 / 06</span></footer>
+        </div>
+        <div class="notes">
+          <div class="notes-title">Speaker notes · slide 1</div>
+          <p><strong>Say:</strong> Mergero closes deals, but finding the right companies to talk to is still slow manual work. MandateScout does the first round of research. You type what a buyer wants, and it returns real Finnish companies with proof from their own websites.</p>
+          <p><strong>Screen data:</strong> the rows come from saved search <code>run_20260926_203346_d9ab05</code> (“Cloud”, industry code 62). They are leads to check, not qualified targets. The red “Check ownership” tag means the website mentions a merger.</p>
+          <p><strong>Sources:</strong> PRH Open Data (<a href="https://avoindata.prh.fi/opendata-ytj-api/v3/companies" target="_blank">avoindata.prh.fi</a>); <a href="../../README.md">README.md</a>.</p>
+        </div>
+      </section>
+
+      <!-- ── 02 ─────────────────────────────────────────────────────────── -->
+      <section class="slide" data-index="2" aria-label="Slide 2: The problem">
+        <div class="frame">
+          <header class="frame-top">
+            <span class="brand"><span class="brand-mark">M</span>MERGERO <span class="sep">/</span> <b>MandateScout</b></span>
+            <span><span class="section-no">02</span> — The problem</span>
+          </header>
+          <div class="body">
+            <span class="eyebrow">Why it matters</span>
+            <h1 class="title title-sm">Before every buyer call, someone checks each company by hand</h1>
+            <div class="content">
+              <div class="cols cols-2" style="border-top: 0;">
+                <div class="col">
+                  <ol class="qlist">
+                    <li><span>01</span><span>Is it real and still active?</span></li>
+                    <li><span>02</span><span>What does it actually do?</span></li>
+                    <li><span>03</span><span>Has it been sold or merged?</span></li>
+                  </ol>
+                </div>
+                <div class="col" style="padding-left: 56px;">
+                  <p class="statement">One wrong fact can cost a buyer’s trust.</p>
+                  <p class="callout">Databases list companies.<br><strong>MandateScout shows the proof behind each one.</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="frame-foot"><span>Tools such as Inven and Grata help with discovery. We make no claims about their features or prices.</span><span class="mono">02 / 06</span></footer>
+        </div>
+        <div class="notes">
+          <div class="notes-title">Speaker notes · slide 2</div>
+          <p><strong>Say:</strong> Before an advisor pitches a company to a buyer, they must answer three basic questions. Today that means opening the company register and each website by hand. An outdated name or a company that was already sold makes the advisor look unprepared.</p>
+          <p>Sourcing databases already exist. We do not compete with them. We add a check step that shows where every fact came from.</p>
+        </div>
+      </section>
+
+      <!-- ── 03 ─────────────────────────────────────────────────────────── -->
+      <section class="slide" data-index="3" aria-label="Slide 3: How it works">
+        <div class="frame">
+          <header class="frame-top">
+            <span class="brand"><span class="brand-mark">M</span>MERGERO <span class="sep">/</span> <b>MandateScout</b></span>
+            <span><span class="section-no">03</span> — How it works</span>
+          </header>
+          <div class="body">
+            <span class="eyebrow">How it works</span>
+            <h1 class="title title-sm" style="max-width: none;">From one sentence to a shortlist in seconds</h1>
+            <div class="content">
+              <div class="cols cols-4 steps">
+                <div class="col">
+                  <span class="step-no">01</span>
+                  <h2 class="col-title">Describe</h2>
+                  <p class="col-text">Type the kind of company you want.</p>
+                  <div class="col-foot"><span class="ex">“CNC machining”</span></div>
+                </div>
+                <div class="col">
+                  <span class="step-no">02</span>
+                  <h2 class="col-title">Search the register</h2>
+                  <p class="col-text">We find active Finnish companies in that industry.</p>
+                  <div class="col-foot"><span class="pill pill-ok"><i></i>Official data</span></div>
+                </div>
+                <div class="col">
+                  <span class="step-no">03</span>
+                  <h2 class="col-title">Read websites</h2>
+                  <p class="col-text">We quote any passage that uses your search words.</p>
+                  <div class="col-foot"><span class="pill pill-ok"><i></i>Source link on every quote</span></div>
+                </div>
+                <div class="col">
+                  <span class="step-no">04</span>
+                  <h2 class="col-title">Pick and export</h2>
+                  <p class="col-text">Tick companies. Download a report or spreadsheet.</p>
+                  <div class="col-foot"><span class="pill pill-ok"><i></i>Report · Excel</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="frame-foot"><span>Measured: 7 to 15 seconds per search · runs on one laptop</span><span class="mono">03 / 06</span></footer>
+        </div>
+        <div class="notes">
+          <div class="notes-title">Speaker notes · slide 3</div>
+          <p><strong>Say:</strong> The advisor types one sentence. An AI planner turns it into an industry code and a few search words in Finnish and English. We search the official register, read each company’s website and quote what matches. The advisor ticks the good ones and exports a report with every source link.</p>
+          <p><strong>Demo tip:</strong> click “Open a saved example” first. It loads instantly and does not depend on the network.</p>
+          <p><strong>Behind the scenes:</strong> Python standard library, local server on port 8787, 53 automated tests. The AI only chooses search settings. It never runs commands. Timing from <a href="../../benchmarks/RESULTS.md">benchmarks/RESULTS.md</a> (7.3 s to 14.7 s per search).</p>
+        </div>
+      </section>
+
+      <!-- ── 04 ─────────────────────────────────────────────────────────── -->
+      <section class="slide" data-index="4" aria-label="Slide 4: Every result shows its proof">
+        <div class="frame">
+          <header class="frame-top">
+            <span class="brand"><span class="brand-mark">M</span>MERGERO <span class="sep">/</span> <b>MandateScout</b></span>
+            <span><span class="section-no">04</span> — Trust</span>
+          </header>
+          <div class="body">
+            <span class="eyebrow">Trust</span>
+            <h1 class="title title-sm">Every result shows its proof</h1>
+            <div class="content" style="margin-top: 32px;">
+              <div class="proof">
+                <figure class="dmock" aria-label="Company details panel in the app">
+                  <div class="dmock-head"><b>Cloud Center Finland Oy</b><span>Lahti · Computer programming · Website read</span></div>
+                  <div class="dmock-body">
+                    <div class="dflag"><strong>Check ownership.</strong> The website mentions a merger. Confirm who owns the company before pitching.</div>
+                    <div>
+                      <div class="dlabel">What we found</div>
+                      <p class="dquote" style="margin-top: 6px;">“Cloud Center Comspot ja Cloud Center Finland yhdistivät voimansa…”<em>Cloud Center Comspot and Cloud Center Finland joined forces.</em></p>
+                      <p class="dsrc">Source: <u>cloudcenter.fi</u></p>
+                    </div>
+                    <div class="tags"><span class="k">Found</span><span class="tag on">cloud</span><span class="tag on">software</span></div>
+                    <div class="tags"><span class="k">Not found</span><span class="tag">saas</span><span class="tag">security</span></div>
+                  </div>
+                </figure>
+                <div>
+                  <h2 class="side-h">What you get</h2>
+                  <ul class="checks">
+                    <li>A quote from the company’s own website</li>
+                    <li>A link to the official register record</li>
+                    <li>A warning when a site mentions a merger</li>
+                  </ul>
+                  <h2 class="side-h" style="margin-top: 32px;">What we never guess</h2>
+                  <div class="unknown-list">
+                    <span class="pill pill-warn"><i></i>Revenue and profit</span>
+                    <span class="pill pill-warn"><i></i>Who owns it</span>
+                    <span class="pill pill-warn"><i></i>Will the owners sell</span>
+                  </div>
+                  <p class="side-note">The advisor confirms these in the first conversation.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="frame-foot"><span>A word match means the words appear on the site. It does not mean the company fits a buyer.</span><span class="mono">04 / 06</span></footer>
+        </div>
+        <div class="notes">
+          <div class="notes-title">Speaker notes · slide 4</div>
+          <p><strong>Say:</strong> Click any company and you see exactly why it is on the list: a quote from its website, the link, and the official register record. Here the tool caught something useful. The website says the company merged, so it shows a “Check ownership” warning before anyone pitches it.</p>
+          <p>We are honest about what public data cannot tell you: revenue, ownership and whether the owners want to sell. The tool leaves these blank on purpose. That is the advisor’s job, and where Mergero adds value.</p>
+          <p><strong>Checked:</strong> the Cloud Center quote was opened and verified on the live website (<a href="PARENT_QA.md">PARENT_QA.md</a>).</p>
+        </div>
+      </section>
+
+      <!-- ── 05 ─────────────────────────────────────────────────────────── -->
+      <section class="slide" data-index="5" aria-label="Slide 5: Built around real buyers">
+        <div class="frame">
+          <header class="frame-top">
+            <span class="brand"><span class="brand-mark">M</span>MERGERO <span class="sep">/</span> <b>MandateScout</b></span>
+            <span><span class="section-no">05</span> — Buyers</span>
+          </header>
+          <div class="body">
+            <span class="eyebrow">Buyer profiles</span>
+            <h1 class="title title-sm">Built around what real buyers ask for</h1>
+            <p class="lede">Five buyer profiles, taken from their own public websites.</p>
+            <div class="content" style="margin-top: 32px;">
+              <table class="table">
+                <colgroup><col style="width:22%"><col style="width:20%"><col><col style="width:150px"></colgroup>
+                <thead><tr><th>Buyer</th><th>Company size</th><th>What they look for</th><th>Source</th></tr></thead>
+                <tbody>
+                  <tr><td class="name">Teqnion</td><td class="size">SEK 25–150M</td><td>Profitable niche industrial companies</td><td><span class="pill pill-ok"><i></i>Checked</span></td></tr>
+                  <tr><td class="name">Indutrade</td><td class="size">SEK 50–200M sales</td><td>Niche technical firms, owned for the long term</td><td><span class="pill pill-ok"><i></i>Checked</span></td></tr>
+                  <tr><td class="name">Lifco</td><td class="size">Proven profit</td><td>Niche leaders. No weapons, tobacco or mining</td><td><span class="pill pill-ok"><i></i>Checked</span></td></tr>
+                  <tr><td class="name">Sponsor Capital</td><td class="size">EUR 15–200M sales</td><td>Profitable Finnish firms, 4–7 year partnership</td><td><span class="pill pill-ok"><i></i>Checked</span></td></tr>
+                  <tr class="muted"><td class="name">Relais Group</td><td class="size">—</td><td>Website could not be opened. Nothing made up.</td><td><span class="pill pill-flag"><i></i>Not available</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <footer class="frame-foot"><span>Pick a buyer under “Advanced” and the search uses their criteria</span><span class="mono">05 / 06</span></footer>
+        </div>
+        <div class="notes">
+          <div class="notes-title">Speaker notes · slide 5</div>
+          <p><strong>Say:</strong> Each buyer profile comes from what the buyer publishes about its own acquisition strategy. Choose a buyer and MandateScout searches with its criteria. When a source cannot be reached, like Relais here, the tool says so and does not invent anything.</p>
+          <p><strong>Sources:</strong> Teqnion (<a href="https://www.teqnion.se/en/subsidiaries/#acquisitionstrategy" target="_blank">teqnion.se</a>); Indutrade (<a href="https://www.indutrade.com/entrepreneurs/how-we-work/" target="_blank">indutrade.com</a>); Lifco (<a href="https://lifco.se/about-lifco/acquisitions/" target="_blank">lifco.se</a>); Sponsor Capital (<a href="https://www.sponsor.fi/en/toimintatapamme" target="_blank">sponsor.fi</a>); Relais (<a href="https://relais.fi/en/investors/acquisitions/" target="_blank">relais.fi</a>, certificate expired at retrieval). Saved in <a href="../../product/data/buyers.json">product/data/buyers.json</a> with retrieval date and hash.</p>
+        </div>
+      </section>
+
+      <!-- ── 06 ─────────────────────────────────────────────────────────── -->
+      <section class="slide" data-index="6" aria-label="Slide 6: Tested, and ready for a pilot">
+        <div class="frame">
+          <header class="frame-top">
+            <span class="brand"><span class="brand-mark">M</span>MERGERO <span class="sep">/</span> <b>MandateScout</b></span>
+            <span><span class="section-no">06</span> — Results and next step</span>
+          </header>
+          <div class="body">
+            <span class="eyebrow">Results and next step</span>
+            <h1 class="title title-sm">Tested on real searches. Ready for a pilot.</h1>
+            <div class="content" style="margin-top: 32px;">
+              <dl class="metrics">
+                <div class="metric"><dt>Companies found</dt><dd>45</dd></div>
+                <div class="metric"><dt>Total time</dt><dd>34<small>s</small></dd></div>
+                <div class="metric"><dt>Websites read</dt><dd>18</dd></div>
+                <div class="metric accent"><dt>With word matches</dt><dd>6</dd></div>
+                <div class="metric"><dt>Ownership warnings</dt><dd>1</dd></div>
+              </dl>
+              <p class="metrics-cap">Three live test searches, 27 Sep 2026. These count research results, not qualified deals.</p>
+              <div class="cols cols-2 cols-tight">
+                <div class="col">
+                  <h2 class="col-title">30-day pilot: what we measure</h2>
+                  <ul class="rows">
+                    <li><b>Time</b><span>Minutes to build a shortlist, vs. by hand</span></li>
+                    <li><b>Accuracy</b><span>Facts the advisor did not need to fix</span></li>
+                    <li><b>Meetings</b><span>Buyer and owner calls accepted</span></li>
+                  </ul>
+                </div>
+                <div class="col">
+                  <h2 class="col-title">Next</h2>
+                  <ul class="rows plain">
+                    <li><span>Add Sweden’s company register</span></li>
+                    <li><span>Add company financials from a licensed source</span></li>
+                    <li><span>Connect to Mergero’s deal tools</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="frame-foot"><span>No pilot, outreach or signed mandate has happened yet</span><span class="mono">06 / 06</span></footer>
+        </div>
+        <div class="notes">
+          <div class="notes-title">Speaker notes · slide 6</div>
+          <p><strong>Say:</strong> We tested three live searches: cloud software, metal products and machinery. In 34 seconds the tool found 45 real companies, read 18 of their websites, found search words on 6 and raised 1 ownership warning. These are research numbers, not deals, and we do not claim time savings we have not measured.</p>
+          <p><strong>Ask:</strong> a 30-day pilot with one Mergero advisor in Helsinki. We compare preparation time and accuracy against the current manual process, and count how many calls get accepted.</p>
+          <p><strong>Sources:</strong> <a href="../../benchmarks/RESULTS.md">benchmarks/RESULTS.md</a> (per search: 14.7 s, 12.0 s, 7.3 s); pilot design in <a href="../../PRODUCT_SPEC.md">PRODUCT_SPEC.md</a>.</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <aside class="notes-panel hidden" id="notes-panel" aria-live="polite" aria-label="Speaker notes"></aside>
+
+  <footer class="controls">
+    <div class="ctrl-group">
+      <button class="ctrl" id="prev-btn" title="Previous slide">Prev <span class="kbd">←</span></button>
+      <button class="ctrl" id="next-btn" title="Next slide">Next <span class="kbd">→</span></button>
+    </div>
+    <nav class="progress" id="progress" aria-label="Slides"></nav>
+    <div class="ctrl-group right">
+      <span class="counter" id="slide-counter">01 / 06</span>
+      <button class="ctrl" id="notes-btn" aria-pressed="false" title="Toggle speaker notes (notes also print when on)">Notes <span class="kbd">S</span></button>
+      <button class="ctrl" id="theme-btn" title="Toggle theme">Theme <span class="kbd">T</span></button>
+      <button class="ctrl" id="fullscreen-btn" title="Toggle fullscreen">Fullscreen <span class="kbd">F</span></button>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const total = slides.length;
+      const stage = document.getElementById('stage');
+      const viewport = document.getElementById('viewport');
+      const progress = document.getElementById('progress');
+      const counter = document.getElementById('slide-counter');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const notesBtn = document.getElementById('notes-btn');
+      const notesPanel = document.getElementById('notes-panel');
+      const themeBtn = document.getElementById('theme-btn');
+      const fullscreenBtn = document.getElementById('fullscreen-btn');
+      let current = 1;
+      let notesVisible = false;
+      const pad = (n) => String(n).padStart(2, '0');
+
+      slides.forEach((slide, i) => {
+        const seg = document.createElement('button');
+        seg.className = 'seg';
+        seg.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        seg.addEventListener('click', () => go(i + 1));
+        progress.appendChild(seg);
+      });
+      const segs = Array.from(progress.children);
+
+      function fit() {
+        const k = Math.min((viewport.clientWidth - 48) / 1280, (viewport.clientHeight - 48) / 720);
+        stage.style.setProperty('--k', Math.max(0.2, k).toFixed(4));
+      }
+
+      function renderNotes() {
+        const notes = slides[current - 1].querySelector('.notes');
+        notesPanel.innerHTML = notes ? notes.innerHTML : '';
+      }
+
+      function go(index) {
+        current = Math.min(total, Math.max(1, index));
+        slides.forEach((s, i) => s.classList.toggle('active', i + 1 === current));
+        segs.forEach((s, i) => {
+          s.classList.toggle('active', i + 1 === current);
+          s.classList.toggle('done', i + 1 < current);
+          s.setAttribute('aria-current', i + 1 === current ? 'step' : 'false');
+        });
+        counter.textContent = `${pad(current)} / ${pad(total)}`;
+        prevBtn.disabled = current === 1;
+        nextBtn.disabled = current === total;
+        if (notesVisible) renderNotes();
+      }
+
+      function toggleNotes() {
+        notesVisible = !notesVisible;
+        notesPanel.classList.toggle('hidden', !notesVisible);
+        document.body.classList.toggle('show-notes', notesVisible);
+        notesBtn.setAttribute('aria-pressed', String(notesVisible));
+        if (notesVisible) renderNotes();
+        fit();
+      }
+
+      function toggleTheme() {
+        const root = document.documentElement;
+        root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+
+      prevBtn.addEventListener('click', () => go(current - 1));
+      nextBtn.addEventListener('click', () => go(current + 1));
+      notesBtn.addEventListener('click', toggleNotes);
+      themeBtn.addEventListener('click', toggleTheme);
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
+      window.addEventListener('resize', fit);
+      document.addEventListener('fullscreenchange', fit);
+
+      window.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        switch (e.key) {
+          case 'ArrowRight': case ' ': case 'PageDown':
+            e.preventDefault(); go(current + 1); break;
+          case 'ArrowLeft': case 'Backspace': case 'PageUp':
+            e.preventDefault(); go(current - 1); break;
+          case 'Home': e.preventDefault(); go(1); break;
+          case 'End': e.preventDefault(); go(total); break;
+          case 's': case 'S': toggleNotes(); break;
+          case 't': case 'T': toggleTheme(); break;
+          case 'f': case 'F': toggleFullscreen(); break;
+        }
+      });
+
+      fit();
+      go(1);
+    })();
+  </script>
+</body>
+</html>

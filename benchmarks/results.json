@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-09-27T01:52:08.399827+00:00",
+  "scope": "Bounded live empirical benchmark querying Finnish PRH YTJ-API v3 and live public company websites across 3 distinct industrial sectors (Cloud IT/62, Fabricated Metal/25, Machinery/28). Enforces normal TLS, active OY entity validation, refresh=True, bounded safe HTTP fetching, SHA-256 cryptographic provenance hashing, and isolated cache storage in benchmarks/cache.",
+  "runs": [
+    {
+      "label": "Cloud Software & IT Services (Cloud / Sector 62)",
+      "query": "Cloud",
+      "industry_code": "62",
+      "elapsed_seconds": 14.7,
+      "total_candidates": 148,
+      "returned_companies": 15,
+      "fetched_websites": 9,
+      "keyword_evidence_companies": 4,
+      "review_flags": 1,
+      "run_id": "run_20260927_015134_59b38d"
+    },
+    {
+      "label": "Industrial Metal Manufacturing (Sector 25)",
+      "query": "",
+      "industry_code": "25",
+      "elapsed_seconds": 12.02,
+      "total_candidates": 10763,
+      "returned_companies": 15,
+      "fetched_websites": 6,
+      "keyword_evidence_companies": 1,
+      "review_flags": 0,
+      "run_id": "run_20260927_015149_f4a7a5"
+    },
+    {
+      "label": "Machinery & Industrial Equipment (Sector 28)",
+      "query": "",
+      "industry_code": "28",
+      "elapsed_seconds": 7.34,
+      "total_candidates": 3869,
+      "returned_companies": 15,
+      "fetched_websites": 3,
+      "keyword_evidence_companies": 1,
+      "review_flags": 0,
+      "run_id": "run_20260927_015201_cfe0e4"
+    }
+  ],
+  "totals": {
+    "returned_companies": 45,
+    "fetched_websites": 18,
+    "keyword_evidence_companies": 6,
+    "review_flags": 1,
+    "elapsed_seconds": 34.05
+  },
+  "limitations": [
+    "Provider filtering can return nonmatching current sectors; collector enforces current mainBusinessLine prefix locally. Provider total_candidates is not the count passing this local filter.",
+    "PRH name searches can match auxiliary and historical names; they do not index all company website text.",
+    "Website presence is dependent on official registry URL filings; missing or outdated registry URLs lead to unexamined candidates without reflecting real business viability.",
+    "Keyword coverage measures public web prose alignment with advisor-defined search heuristics; it does NOT indicate acquisition suitability, transaction readiness, or commercial fitness.",
+    "Corporate-change terms ('acquired by', 'yhdistiv\u00c3\u00a4t voimansa', etc.) act strictly as advisory review triggers to prevent treating subsidiaries as independent targets, not as confirmed ownership status.",
+    "Web fetching uses standard TLS with a strict 7-second timeout and 1 MB ceiling; bot-protection (Cloudflare/CAPTCHA), geo-blocking, or slow hosting may result in unreachability."
+  ]
+}

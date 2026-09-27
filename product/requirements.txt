@@ -1,0 +1,3 @@
+# MandateScout Backend Dependencies
+# Python 3.10+ Standard Library Only
+# Zero paid APIs, credentials, build tooling, or external packages required.

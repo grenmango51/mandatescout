@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%23171717'/%3E%3Crect y='21' width='24' height='3' fill='%23f76b15'/%3E%3Ctext x='12' y='16.5' font-family='monospace' font-size='13' font-weight='700' fill='%23fff' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <title>MandateScout · MERGERO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('ms-theme');
+        var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      } catch (_) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=simple2">
+</head>
+<body class="mode-start">
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M7 7h10v10M7 17 17 7"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="1.5"/><path d="M4 16V4.5A1.5 1.5 0 0 1 5.5 3H16"/></symbol>
+    <symbol id="i-sheet" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M3 9h18M3 15h18M9 3v18"/></symbol>
+  </svg>
+
+  <div class="app">
+    <!-- Top bar -->
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="MandateScout, start over">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span class="brand-product">MandateScout</span>
+      </a>
+      <div class="topbar-slot" id="topbar-slot"></div>
+      <div class="topbar-actions">
+        <button type="button" id="btn-toggle-filters" class="btn-text" aria-expanded="false" aria-controls="advanced-filters-panel">Advanced</button>
+        <button type="button" id="btn-theme" class="icon-btn" aria-label="Switch light or dark theme" title="Switch theme">
+          <svg class="icon icon-theme-dark" aria-hidden="true"><use href="#i-moon"/></svg>
+          <svg class="icon icon-theme-light" aria-hidden="true"><use href="#i-sun"/></svg>
+        </button>
+      </div>
+      <div id="progress-line" class="progress-line hidden" aria-hidden="true">
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+    </header>
+
+    <!-- Advanced search (hidden by default) -->
+    <section id="advanced-filters-panel" class="filters hidden" aria-label="Advanced search">
+      <form id="search-form" class="filters-grid" onsubmit="return false;">
+        <div class="field">
+          <label for="buyer-select">Buyer profile</label>
+          <select id="buyer-select" name="buyer_id">
+            <option value="">None</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="search-query">Company name contains</label>
+          <input type="text" id="search-query" name="query" placeholder="e.g. Cloud">
+        </div>
+        <div class="field">
+          <label for="industry-code">Industry code</label>
+          <input type="text" id="industry-code" name="industry_code" placeholder="e.g. 62" list="industry-presets">
+          <datalist id="industry-presets">
+            <option value="62">62 — Software and IT services</option>
+            <option value="62020">62020 — IT consulting</option>
+            <option value="70220">70220 — Business consulting</option>
+            <option value="71120">71120 — Engineering consulting</option>
+            <option value="25">25 — Metal products</option>
+            <option value="28">28 — Machinery and equipment</option>
+          </datalist>
+        </div>
+        <div class="field field-narrow">
+          <label for="limit-select">Results</label>
+          <select id="limit-select" name="limit">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+        <div class="field field-wide">
+          <label for="keywords-input">Words to look for on company websites</label>
+          <input type="text" id="keywords-input" name="keywords" placeholder="e.g. cloud, software, consulting">
+        </div>
+
+        <div id="buyer-card" class="buyer hidden" aria-live="polite">
+          <p><strong id="buyer-card-name"></strong> <a id="buyer-card-url" href="#" target="_blank" rel="noopener noreferrer" class="link">source</a> <span id="buyer-card-date" class="muted mono"></span></p>
+          <div id="buyer-card-thesis" class="muted buyer-thesis"></div>
+          <div id="buyer-criteria-list" class="tag-cloud"></div>
+        </div>
+
+        <div class="filters-actions">
+          <label class="check" for="refresh-checkbox">
+            <input type="checkbox" id="refresh-checkbox" name="refresh">
+            <span>Always fetch fresh data</span>
+          </label>
+          <span class="spacer"></span>
+          <button type="button" id="btn-reset-filters" class="btn btn-ghost">Reset</button>
+          <button type="submit" id="btn-run-search" class="btn btn-primary">Search with these settings</button>
+        </div>
+      </form>
+    </section>
+
+    <main class="workspace">
+      <!-- Start screen -->
+      <section id="start-view" class="start" aria-labelledby="start-title">
+        <div class="start-inner">
+          <h1 id="start-title">Find Finnish companies worth pitching to a buyer</h1>
+          <p class="start-lede">Describe the kind of company you want. We check the official company register and each company’s website, then show what we found.</p>
+
+          <div class="start-slot" id="start-slot">
+            <div class="search" id="search">
+              <svg class="icon search-icon" aria-hidden="true"><use href="#i-search"/></svg>
+              <label for="agent-request-input" class="sr-only">What kind of companies are you looking for?</label>
+              <input type="text" id="agent-request-input" class="search-input" placeholder="e.g. Finnish cloud software companies" autocomplete="off" spellcheck="false">
+              <button type="button" id="btn-agent-research" class="search-btn">
+                <span id="agent-spinner" class="spinner hidden" aria-hidden="true"></span>
+                <span id="agent-btn-text">Search</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="examples">
+            <span class="examples-label">Try an example</span>
+            <div id="example-list" class="example-list"></div>
+          </div>
+
+          <p id="saved-example" class="start-alt hidden">
+            In a hurry? <button type="button" id="btn-open-example" class="btn-link">Open a saved example</button> — it loads instantly.
+          </p>
+        </div>
+      </section>
+
+      <!-- Results -->
+      <section id="results-view" class="results hidden" aria-label="Results">
+        <div class="results-bar">
+          <div class="summary" aria-live="polite">
+            <span id="agent-spinner-inline" class="spinner hidden" aria-hidden="true"></span>
+            <span id="summary-text" class="summary-text">—</span>
+            <button type="button" id="btn-notes" class="btn-link hidden" aria-expanded="false" aria-controls="notes-list"></button>
+          </div>
+
+          <div class="results-actions">
+            <div id="coverage-toggle" class="coverage-toggle" role="group" aria-label="Coverage view scope">
+              <button type="button" id="btn-view-evidence" class="toggle-btn is-active" title="Show candidates with verified keyword evidence on website">
+                <span>Evidence matches</span>
+                <span class="badge" id="evidence-count-badge">0</span>
+              </button>
+              <button type="button" id="btn-view-all" class="toggle-btn" title="Show all returned candidates">
+                <span>All candidates</span>
+                <span class="badge" id="all-count-badge">0</span>
+              </button>
+            </div>
+
+            <span id="selection-info" class="selection hidden">
+              <span id="selection-counter">0 selected</span>
+              <button type="button" id="btn-clear-selection" class="btn-link">Clear</button>
+            </span>
+            <div class="field-inline">
+              <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+              <label for="table-filter-input" class="sr-only">Filter results</label>
+              <input type="text" id="table-filter-input" placeholder="Filter">
+            </div>
+            <label for="runs-history-select" class="sr-only">Open a past search</label>
+            <select id="runs-history-select" class="select-inline">
+              <option value="">Past searches</option>
+            </select>
+            <div class="menu-wrap">
+              <button type="button" id="btn-export" class="btn btn-primary" aria-haspopup="menu" aria-expanded="false" aria-controls="export-menu" disabled>
+                Export
+                <svg class="icon icon-xs" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+              <div id="export-menu" class="menu hidden" role="menu">
+                <p id="export-scope" class="menu-scope">All companies</p>
+                <button type="button" id="btn-download-brief" class="menu-item" role="menuitem">
+                  <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+                  <span><span class="menu-label">Download report</span><span class="menu-sub">Text file with every source link</span></span>
+                </button>
+                <button type="button" id="btn-copy-md" class="menu-item" role="menuitem">
+                  <svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>
+                  <span><span class="menu-label">Copy report</span><span class="menu-sub">Paste into an email or document</span></span>
+                </button>
+                <button type="button" id="btn-export-csv" class="menu-item" role="menuitem">
+                  <svg class="icon" aria-hidden="true"><use href="#i-sheet"/></svg>
+                  <span><span class="menu-label">Download spreadsheet</span><span class="menu-sub">Opens in Excel</span></span>
+                </button>
+                <div class="menu-note">
+                  <label for="brief-notes">Add a note to the report</label>
+                  <input type="text" id="brief-notes" placeholder="Optional">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="search-details" class="search-details hidden" aria-label="Search details and provenance">
+          <div class="search-details-inner">
+            <span id="meta-source-mode" class="detail-chip"><strong class="chip-label">Source</strong> <span id="meta-source-mode-val" class="chip-val">—</span></span>
+            <span id="meta-query-time" class="detail-chip"><strong class="chip-label">Queried</strong> <span id="meta-query-time-val" class="chip-val">—</span></span>
+            <span id="meta-duration" class="detail-chip"><strong class="chip-label">Duration</strong> <span id="meta-duration-val" class="chip-val">—</span></span>
+            <span id="meta-planner" class="detail-chip"><strong class="chip-label">Planner</strong> <span id="meta-planner-val" class="chip-val">—</span></span>
+            <span id="meta-filters" class="detail-chip"><strong class="chip-label">Request</strong> <span id="meta-filters-val" class="chip-val">—</span></span>
+            <span id="meta-buyer" class="detail-chip hidden"><strong class="chip-label">Buyer</strong> <span id="meta-buyer-val" class="chip-val">—</span></span>
+          </div>
+        </div>
+
+        <ul id="notes-list" class="notes hidden"></ul>
+
+        <div id="followup-row" class="followups hidden">
+          <span class="followups-label">Refinements</span>
+          <div id="followup-chips-container" class="followup-chips"></div>
+        </div>
+
+        <div class="grid-viewport" id="grid-viewport" role="region" aria-label="Companies found">
+          <table id="results-table" class="grid">
+            <colgroup>
+              <col class="c-select">
+              <col class="c-company">
+              <col class="c-industry">
+              <col class="c-city">
+              <col class="c-web">
+              <col class="c-match">
+              <col class="c-open">
+            </colgroup>
+            <thead>
+              <tr>
+                <th class="col-select" scope="col">
+                  <input type="checkbox" id="header-select-all" aria-label="Select all companies">
+                </th>
+                <th scope="col" class="sortable" data-sort="name" aria-sort="none"><button type="button" class="th-btn">Company<span class="sort-ind" aria-hidden="true"></span></button></th>
+                <th scope="col" class="sortable" data-sort="industry_code" aria-sort="none"><button type="button" class="th-btn">Industry<span class="sort-ind" aria-hidden="true"></span></button></th>
+                <th scope="col" class="sortable" data-sort="city" aria-sort="none"><button type="button" class="th-btn">City<span class="sort-ind" aria-hidden="true"></span></button></th>
+                <th scope="col" class="sortable" data-sort="website_status" aria-sort="none"><button type="button" class="th-btn">Website<span class="sort-ind" aria-hidden="true"></span></button></th>
+                <th scope="col" class="sortable" data-sort="relevance_score" aria-sort="descending" title="How many of the search words appear on the company’s website. This is not a measure of buyer fit."><button type="button" class="th-btn">Word matches<span class="sort-ind" aria-hidden="true"></span></button></th>
+                <th scope="col"><span class="sr-only">Details</span></th>
+              </tr>
+            </thead>
+            <tbody id="results-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="footer-text">Data from the Finnish Trade Register and company websites. Revenue, ownership and willingness to sell are not included.</span>
+      <button type="button" id="btn-how" class="btn-link" aria-haspopup="dialog" aria-controls="how-sheet">How it works</button>
+      <span id="api-status-badge" class="status-dot" title="Checking connection">Connecting…</span>
+    </footer>
+  </div>
+
+  <div id="alert-container" class="toasts" aria-live="polite"></div>
+
+  <!-- Company details -->
+  <div id="drawer-backdrop" class="backdrop hidden" aria-hidden="true"></div>
+  <aside id="evidence-drawer" class="drawer hidden" role="dialog" aria-modal="true" aria-labelledby="drawer-company-name">
+    <header class="drawer-head">
+      <div class="drawer-head-main">
+        <h2 id="drawer-company-name" class="drawer-title">Company</h2>
+        <p id="drawer-subtitle" class="drawer-sub">—</p>
+      </div>
+      <button type="button" id="btn-close-drawer" class="icon-btn" aria-label="Close">
+        <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+    </header>
+
+    <div class="drawer-body">
+      <div id="drawer-exclusion-box" class="flag-note hidden">
+        <strong>Check ownership.</strong> <span id="drawer-exclusion-text"></span>
+      </div>
+
+      <section class="d-section">
+        <h3 class="d-title">What we found</h3>
+        <ol id="drawer-evidence-list" class="evidence"></ol>
+      </section>
+
+      <section class="d-section">
+        <h3 class="d-title">Search words</h3>
+        <div class="kw-row"><span class="kw-label">Found</span><div id="drawer-matched-keywords" class="tag-cloud"></div></div>
+        <div class="kw-row"><span class="kw-label">Not found</span><div id="drawer-missing-criteria" class="tag-cloud"></div></div>
+      </section>
+
+      <section class="d-section">
+        <h3 class="d-title">Not known from public data</h3>
+        <p class="d-text">Revenue and profit, who owns the company, and whether the owners would sell. Confirm these directly.</p>
+      </section>
+
+      <details class="d-section d-more">
+        <summary class="d-title">Register details</summary>
+        <dl class="kv">
+          <div class="kv-row"><dt>Business ID</dt><dd id="drawer-business-id" class="mono">—</dd></div>
+          <div class="kv-row"><dt>Legal form</dt><dd id="drawer-legal-form">—</dd></div>
+          <div class="kv-row"><dt>Status</dt><dd id="drawer-status">—</dd></div>
+          <div class="kv-row"><dt>Industry</dt><dd id="drawer-industry">—</dd></div>
+          <div class="kv-row kv-full"><dt>Website</dt><dd><a id="drawer-website-url" href="#" target="_blank" rel="noopener noreferrer" class="link">—</a> <span id="drawer-website-badge"></span></dd></div>
+          <div class="kv-row kv-full"><dt>Website checked</dt><dd id="drawer-website-time" class="mono">—</dd></div>
+          <div class="kv-row kv-full"><dt>Register record</dt><dd><a id="drawer-registry-url" href="#" target="_blank" rel="noopener noreferrer" class="link">—</a></dd></div>
+          <div class="kv-row kv-full"><dt>Register checked</dt><dd id="drawer-registry-time" class="mono">—</dd></div>
+        </dl>
+      </details>
+    </div>
+
+    <footer class="drawer-foot">
+      <button type="button" id="btn-drawer-close" class="btn btn-ghost">Close</button>
+      <span class="spacer"></span>
+      <button type="button" id="btn-drawer-select-toggle" class="btn btn-primary">Add to selection</button>
+    </footer>
+  </aside>
+
+  <!-- How it works -->
+  <aside id="how-sheet" class="drawer hidden" role="dialog" aria-modal="true" aria-labelledby="how-title">
+    <header class="drawer-head">
+      <div class="drawer-head-main">
+        <h2 id="how-title" class="drawer-title">How it works</h2>
+      </div>
+      <button type="button" id="btn-close-how" class="icon-btn" aria-label="Close">
+        <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+    </header>
+    <div class="drawer-body">
+      <ol class="how-steps">
+        <li><strong>You describe what you want.</strong> The request is turned into an industry code and a few search words.</li>
+        <li><strong>We search the Finnish Trade Register</strong> for active limited companies in that industry.</li>
+        <li><strong>We read each company’s own website</strong> and quote any passage that mentions your search words.</li>
+        <li><strong>You pick companies and export a report</strong> with links to every source.</li>
+      </ol>
+      <section class="d-section">
+        <h3 class="d-title">Keep in mind</h3>
+        <p class="d-text">A word match only means the words appear on the website. It does not mean the company fits a buyer. Revenue, ownership and willingness to sell are not in public data. “Check ownership” marks websites that mention a merger or acquisition.</p>
+      </section>
+      <section class="d-section">
+        <h3 class="d-title">Measured test</h3>
+        <div id="benchmark-body"><p class="d-text">Loading…</p></div>
+      </section>
+    </div>
+  </aside>
+
+  <script src="app.js?v=simple2"></script>
+</body>
+</html>

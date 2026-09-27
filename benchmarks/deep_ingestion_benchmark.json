@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-09-27T09:11:59Z",
+  "query": "",
+  "industry_code": "25",
+  "keywords": [
+    "cnc",
+    "koneistus",
+    "sorvaus",
+    "jyrsintä",
+    "milling",
+    "turning",
+    "sopimusvalmistus",
+    "konepaja"
+  ],
+  "baseline": {
+    "elapsed_seconds": 0.25,
+    "scanned": 132,
+    "website_read": 24,
+    "subpages_crawled": 0,
+    "evidence_positive": 10,
+    "top_company": "Amak Oy",
+    "top_score": 75.0,
+    "top_keywords_count": 6
+  },
+  "approach_b": {
+    "elapsed_seconds": 2.25,
+    "scanned": 132,
+    "website_read": 24,
+    "subpages_crawled": 23,
+    "evidence_positive": 15,
+    "top_company": "Amak Oy",
+    "top_score": 75.0,
+    "top_keywords_count": 6
+  },
+  "comparison": {
+    "evidence_positive_gain": 5,
+    "evidence_positive_pct_gain": 50.0,
+    "subpages_crawled": 23
+  }
+}

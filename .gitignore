@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+.factory/
+codex-session-*.md
+.tempmediaStorage/
+.system_generated/
+product/cache/
+benchmarks/cache/
+deliverables/*.zip
+

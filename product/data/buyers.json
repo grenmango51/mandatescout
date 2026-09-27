@@ -1,0 +1,206 @@
+{
+  "buyers": [
+    {
+      "id": "teqnion",
+      "name": "Teqnion AB (publ)",
+      "source_url": "https://www.teqnion.se/en/subsidiaries/#acquisitionstrategy",
+      "retrieved_at": "2026-09-26T14:54:38.325866+00:00",
+      "criteria": [
+        {
+          "id": "teq-crit-turnover",
+          "label": "Stable Turnover SEK 25-150M",
+          "kind": "financial_size",
+          "source_excerpt": "Our acquisition criteria are primarily profitability with a profit that can withstand restructuring and integration as well as a stable turnover in the range of SEK 25-150 million.",
+          "source_url": "https://www.teqnion.se/en/subsidiaries/#acquisitionstrategy"
+        },
+        {
+          "id": "teq-crit-qualitative",
+          "label": "Niche B2B & Sound Management",
+          "kind": "operational_fit",
+          "source_excerpt": "We are looking for companies that are run by sound people with soul and heart. Profitable companies with solid history and good cash flows. Niche businesses with proud employees. Teqnion looks for unique businesses with limited competition, where a relationship with the seller often extends long after Teqnion took over as owner.",
+          "source_url": "https://www.teqnion.se/en/subsidiaries/#acquisitionstrategy"
+        },
+        {
+          "id": "teq-crit-model",
+          "label": "Industrial Focus & Decentralized Value Creation",
+          "kind": "ownership_model",
+          "source_excerpt": "Teqnion invests in well-managed industrial companies and further develops these with a focus on long-term value creation. The acquisitions are financed through own cash and bank loans.",
+          "source_url": "https://www.teqnion.se/en/subsidiaries/#acquisitionstrategy"
+        }
+      ],
+      "keywords": [
+        "industrial",
+        "niche",
+        "components",
+        "b2b",
+        "manufacturing"
+      ],
+      "industry_codes": [
+        "25",
+        "26",
+        "27",
+        "28",
+        "33"
+      ],
+      "status": "verified",
+      "assumptions_note": "Industry codes and keywords represent advisor search heuristics, not buyer-stated facts."
+    },
+    {
+      "id": "indutrade",
+      "name": "Indutrade AB (publ)",
+      "source_url": "https://www.indutrade.com/entrepreneurs/how-we-work/",
+      "retrieved_at": "2026-09-26T14:54:38.511434+00:00",
+      "criteria": [
+        {
+          "id": "ind-crit-turnover",
+          "label": "Annual Sales SEK 50-200M",
+          "kind": "financial_size",
+          "source_excerpt": "A typical Indutrade company generates annual sales of between SEK 50-200 million – an amount that enables each MD to maintain overall control and quickly adapt the business to customer requirements.",
+          "source_url": "https://www.indutrade.com/entrepreneurs/how-we-work/"
+        },
+        {
+          "id": "ind-crit-ownership",
+          "label": "Decentralised & No Exit Strategy",
+          "kind": "ownership_model",
+          "source_excerpt": "In our acquisition model, acquired companies retain their name, culture and management when they become part of the Group. Indutrade has no exit strategy and by selling to Indutrade, the company's future is secured.",
+          "source_url": "https://www.indutrade.com/entrepreneurs/how-we-work/"
+        },
+        {
+          "id": "ind-crit-qualitative",
+          "label": "Niche Leadership & Technical Expertise",
+          "kind": "operational_fit",
+          "source_excerpt": "In addition to meeting requirements for financial performance, the acquired companies must also have a highly skilled management team, be characterised by a genuine entrepreneurial spirit and possess deep technical expertise. They should preferably hold a leading position in their own particular niche.",
+          "source_url": "https://www.indutrade.com/entrepreneurs/how-we-work/"
+        },
+        {
+          "id": "ind-crit-scope",
+          "label": "Proprietary Products or Technical Sales",
+          "kind": "business_model",
+          "source_excerpt": "We strive for a balance between companies that primarily conduct sales of technological solutions, and companies with their own products and brands. The proportion of Group companies with proprietary products has gradually grown and now accounts for 40% of consolidated net sales.",
+          "source_url": "https://www.indutrade.com/entrepreneurs/how-we-work/"
+        }
+      ],
+      "keywords": [
+        "technical trading",
+        "industrial",
+        "flow technology",
+        "components",
+        "niche leader"
+      ],
+      "industry_codes": [
+        "28990",
+        "33200",
+        "71129",
+        "4669"
+      ],
+      "status": "verified",
+      "assumptions_note": "Industry codes and keywords represent advisor search heuristics, not buyer-stated facts."
+    },
+    {
+      "id": "lifco",
+      "name": "Lifco AB (publ)",
+      "source_url": "https://lifco.se/about-lifco/acquisitions/",
+      "retrieved_at": "2026-09-26T14:54:38.683013+00:00",
+      "criteria": [
+        {
+          "id": "lifco-crit-core",
+          "label": "Niche Leader with Documented Profitability",
+          "kind": "operational_fit",
+          "source_excerpt": "Businesses we will consider to invest in should meet these criteria: Stable business Leading in its niche An attractive position in the value chain without being dependent on specific suppliers or customers Limited or no exposure to technological risk Documented profitability Conduct a sustainable business",
+          "source_url": "https://lifco.se/about-lifco/acquisitions/"
+        },
+        {
+          "id": "lifco-crit-negative",
+          "label": "Explicit Sector Exclusions",
+          "kind": "negative_screen",
+          "source_excerpt": "We do not acquire companies which are considered to violate the UN Global Compact’s principles on human rights, labour standards, environment and anti-corruption. Nor do we acquire companies which manufacture or sell weapons, alcohol, tobacco, fossil fuels or uranium, sell, distribute or produce pornography, games or fast-moving consumer goods or extract minerals.",
+          "source_url": "https://lifco.se/about-lifco/acquisitions/"
+        },
+        {
+          "id": "lifco-crit-ownership",
+          "label": "Decentralised & Long-Term View",
+          "kind": "ownership_model",
+          "source_excerpt": "Our susidiaries have a high degree of independence. We believe that this is a foundation for the nurturing of an entrepreneurial spirit. As long-term owners, we basically never sell a company. Our businesses stay independent and decisions are taken by local management.",
+          "source_url": "https://lifco.se/about-lifco/acquisitions/"
+        }
+      ],
+      "keywords": [
+        "niche leader",
+        "dental",
+        "demolition",
+        "environmental",
+        "systems"
+      ],
+      "industry_codes": [
+        "28920",
+        "3250",
+        "38210",
+        "28990"
+      ],
+      "status": "verified",
+      "assumptions_note": "Industry codes and keywords represent advisor search heuristics, not buyer-stated facts."
+    },
+    {
+      "id": "sponsor_capital",
+      "name": "Sponsor Capital",
+      "source_url": "https://www.sponsor.fi/en/toimintatapamme",
+      "retrieved_at": "2026-09-26T14:54:39.114555+00:00",
+      "criteria": [
+        {
+          "id": "sponsor-crit-turnover",
+          "label": "Net Sales EUR 15-200M",
+          "kind": "financial_size",
+          "source_excerpt": "Our target companies typically have net sales in the range of EUR 15–200 million euros. We also invest in smaller companies, particularly when the goal is significant growth through acquisitions or industry consolidations.",
+          "source_url": "https://www.sponsor.fi/en/toimintatapamme"
+        },
+        {
+          "id": "sponsor-crit-geography-ops",
+          "label": "Finnish Domicile & Profitable Operations",
+          "kind": "operational_fit",
+          "source_excerpt": "Sponsor Capital is looking to invest in Finnish companies with net sales in the range of 15–200 million euros and stable and profitable operations.",
+          "source_url": "https://www.sponsor.fi/en/toimintatapamme"
+        },
+        {
+          "id": "sponsor-crit-ownership",
+          "label": "Partnership period typically 4-7 years",
+          "kind": "ownership_model",
+          "source_excerpt": "The partnership period begins at closing and typically lasts 4–7 years, during which we focus on developing the company and supporting its growth together with management. Our collaboration is guided by the planned and determined execution of jointly defined goals.",
+          "source_url": "https://www.sponsor.fi/en/toimintatapamme"
+        }
+      ],
+      "keywords": [
+        "wellness",
+        "consumer",
+        "industrial",
+        "b2b services",
+        "software"
+      ],
+      "industry_codes": [
+        "47910",
+        "62010",
+        "46900",
+        "70220"
+      ],
+      "status": "verified",
+      "assumptions_note": "Industry codes and keywords represent advisor search heuristics, not buyer-stated facts."
+    },
+    {
+      "id": "relais",
+      "name": "Relais Group Plc",
+      "source_url": "https://relais.fi/en/investors/acquisitions/",
+      "retrieved_at": "2026-09-26T14:54:39.392056+00:00",
+      "criteria": [],
+      "keywords": [
+        "commercial vehicle",
+        "aftermarket",
+        "technical wholesale"
+      ],
+      "industry_codes": [
+        "45201",
+        "45310"
+      ],
+      "status": "unavailable",
+      "assumptions_note": "Industry codes and keywords represent advisor search heuristics, not buyer-stated facts."
+    }
+  ]
+}

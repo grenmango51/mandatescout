@@ -1,0 +1,36 @@
+{
+  "buyer_id": "teqnion",
+  "buyer_name": "Teqnion AB (publ)",
+  "source_url": "https://www.teqnion.se/en/subsidiaries/",
+  "anchor": "#acquisitionstrategy",
+  "retrieved_at": "2026-09-26T14:54:38.325866+00:00",
+  "http_status": 200,
+  "sha256": "9ed009063d5c67fe6974e4a35bfdc52a38e2e5503a9964fdaa4e708e570564a6",
+  "bytes_length": 104327,
+  "raw_file": "teqnion_raw.html",
+  "extracted_file": "teqnion_extracted.txt",
+  "verified_tls": true,
+  "supported_criteria": [
+    {
+      "id": "teq-crit-turnover",
+      "label": "Stable Turnover SEK 25-150M",
+      "kind": "financial_size",
+      "source_excerpt": "Our acquisition criteria are primarily profitability with a profit that can withstand restructuring and integration as well as a stable turnover in the range of SEK 25-150 million.",
+      "source_url": "https://www.teqnion.se/en/subsidiaries/#acquisitionstrategy"
+    },
+    {
+      "id": "teq-crit-qualitative",
+      "label": "Niche B2B & Sound Management",
+      "kind": "operational_fit",
+      "source_excerpt": "We are looking for companies that are run by sound people with soul and heart. Profitable companies with solid history and good cash flows. Niche businesses with proud employees. Teqnion looks for unique businesses with limited competition, where a relationship with the seller often extends long after Teqnion took over as owner.",
+      "source_url": "https://www.teqnion.se/en/subsidiaries/#acquisitionstrategy"
+    },
+    {
+      "id": "teq-crit-model",
+      "label": "Industrial Focus & Decentralized Value Creation",
+      "kind": "ownership_model",
+      "source_excerpt": "Teqnion invests in well-managed industrial companies and further develops these with a focus on long-term value creation. The acquisitions are financed through own cash and bank loans.",
+      "source_url": "https://www.teqnion.se/en/subsidiaries/#acquisitionstrategy"
+    }
+  ]
+}

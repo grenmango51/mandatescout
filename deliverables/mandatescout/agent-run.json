@@ -1,0 +1,537 @@
+{
+  "job_id": "job_20260927_020052_f2d912",
+  "created_at": "2026-09-27T05:00:52.110124+03:00",
+  "request": "Find 10 Finnish metal manufacturing companies with CNC machining evidence.",
+  "buyer_id": null,
+  "refresh": false,
+  "status": "completed",
+  "stage": "completed",
+  "stage_message": "Research completed successfully.",
+  "progress_pct": 100,
+  "plan": {
+    "query": "",
+    "industry_code": "25",
+    "keywords": [
+      "cnc",
+      "koneistus",
+      "sorvaus",
+      "jyrsintä",
+      "machining",
+      "metallityöstö"
+    ],
+    "limit": 10,
+    "rationale": "Filters Finnish companies in fabricated metal manufacturing under TOL code 25 to score website evidence of CNC turning and milling capabilities.",
+    "planner_type": "gemini_agy",
+    "planner_label": "Gemini 3.8 Flash (AGY CLI Planner)",
+    "blocker_reported": null,
+    "unverified_qualifiers": [],
+    "disclaimers": [
+      "Financial metrics (turnover, EBITDA) and owner transaction intent are unverified in public open records.",
+      "Candidate scoring reflects explicit keyword coverage across public website prose, not buyer fit or acquisition readiness."
+    ],
+    "bounds_validated": true,
+    "followup_refinements": [
+      "Refine: Focus on precision CNC machining & automation",
+      "Refine: Add keyword 'oem components'",
+      "Refine: Expand candidate limit to 15"
+    ]
+  },
+  "results": {
+    "run_id": "run_20260927_020133_2514c0",
+    "queried_at": "2026-09-27T05:01:33.914952+03:00",
+    "source_mode": "mixed",
+    "elapsed_ms": 3149,
+    "query": "",
+    "industry_code": "25",
+    "keywords": [
+      "cnc",
+      "koneistus",
+      "sorvaus",
+      "jyrsintä",
+      "machining",
+      "metallityöstö"
+    ],
+    "buyer_id": null,
+    "total_candidates": 10763,
+    "companies": [
+      {
+        "business_id": "0106490-3",
+        "name": "Amak Oy",
+        "legal_form": "Osakeyhtiö",
+        "legal_form_code": "16",
+        "status": "Active (Trade Register: Registered)",
+        "industry_code": "25530",
+        "industry_taxonomy": "TOIMI4",
+        "industry_label": "Machining of metals",
+        "website": "https://amak.fi",
+        "city": "HELSINKI",
+        "registry_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?businessId=0106490-3",
+        "registry_retrieved_at": "2026-09-26T23:30:08.117105+03:00",
+        "website_status": "fetched",
+        "website_retrieved_at": "2026-09-27T05:01:33.935363+03:00",
+        "website_source_url": "https://amak.fi",
+        "evidence": [
+          {
+            "criterion": "Official Registration",
+            "excerpt": "Officially registered Finnish Osakeyhtiö (PRH code 16) in HELSINKI under taxonomy TOIMI4 with primary business line 25530 (Machining of metals).",
+            "source_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?companyForm=OY&mainBusinessLine=25",
+            "kind": "source_fact"
+          },
+          {
+            "criterion": "Keyword match: 'cnc'",
+            "excerpt": "Konepaja Helsinki | Alihankintakoneistus | CNC koneistus | Amak Koneistamme kriittiset komponentit, joissa laatu ja tarkkuus eivät saa pettää Pyyd...",
+            "source_url": "https://amak.fi",
+            "kind": "keyword_match"
+          },
+          {
+            "criterion": "Keyword match: 'koneistus'",
+            "excerpt": "Konepaja Helsinki | Alihankintakoneistus | CNC koneistus | Amak Koneistamme kriittiset komponentit, joissa laatu ja tarkkuus eivät saa pettää Pyydä tarjous...",
+            "source_url": "https://amak.fi",
+            "kind": "keyword_match"
+          },
+          {
+            "criterion": "Keyword match: 'sorvaus'",
+            "excerpt": "...tarpeet, DFM ja tarjous Valmistelu: CNC-ohjelmointi ja materiaalihankinta Tuotanto : automatisoitu sorvaus/ jyrsintä Laadunvarmistus : 3D-mittaus ja dokumentointi Viimeistely: pintakäsittely ja kokoonpano T...",
+            "source_url": "https://amak.fi",
+            "kind": "keyword_match"
+          },
+          {
+            "criterion": "Keyword match: 'jyrsintä'",
+            "excerpt": "...DFM ja tarjous Valmistelu: CNC-ohjelmointi ja materiaalihankinta Tuotanto : automatisoitu sorvaus/ jyrsintä Laadunvarmistus : 3D-mittaus ja dokumentointi Viimeistely: pintakäsittely ja kokoonpano Toimitus :...",
+            "source_url": "https://amak.fi",
+            "kind": "keyword_match"
+          }
+        ],
+        "matched_keywords": [
+          "cnc",
+          "jyrsintä",
+          "koneistus",
+          "sorvaus"
+        ],
+        "missing_criteria": [
+          "machining",
+          "metallityöstö"
+        ],
+        "relevance_score": 66.7,
+        "keyword_coverage": "4/6",
+        "financials": {
+          "revenue": null,
+          "ebitda": null
+        },
+        "owner_intent": null,
+        "ownership_status": "unknown",
+        "excluded_reason": null
+      },
+      {
+        "business_id": "0100360-9",
+        "name": "Amoila Oy",
+        "legal_form": "Osakeyhtiö",
+        "legal_form_code": "16",
+        "status": "Active (Trade Register: Registered)",
+        "industry_code": "25510",
+        "industry_taxonomy": "TOIMI4",
+        "industry_label": "Coating of metals",
+        "website": null,
+        "city": "ESPOO",
+        "registry_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?businessId=0100360-9",
+        "registry_retrieved_at": "2026-09-26T23:30:08.117105+03:00",
+        "website_status": "missing",
+        "website_retrieved_at": null,
+        "website_source_url": null,
+        "evidence": [
+          {
+            "criterion": "Official Registration",
+            "excerpt": "Officially registered Finnish Osakeyhtiö (PRH code 16) in ESPOO under taxonomy TOIMI4 with primary business line 25510 (Coating of metals).",
+            "source_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?companyForm=OY&mainBusinessLine=25",
+            "kind": "source_fact"
+          }
+        ],
+        "matched_keywords": [],
+        "missing_criteria": [
+          "cnc",
+          "koneistus",
+          "sorvaus",
+          "jyrsintä",
+          "machining",
+          "metallityöstö"
+        ],
+        "relevance_score": 0.0,
+        "keyword_coverage": "0/6",
+        "financials": {
+          "revenue": null,
+          "ebitda": null
+        },
+        "owner_intent": null,
+        "ownership_status": "unknown",
+        "excluded_reason": null
+      },
+      {
+        "business_id": "0103173-0",
+        "name": "Jyrsin - Kierreväline Oy",
+        "legal_form": "Osakeyhtiö",
+        "legal_form_code": "16",
+        "status": "Active (Trade Register: Registered)",
+        "industry_code": "25630",
+        "industry_taxonomy": "TOIMI4",
+        "industry_label": "Manufacture of tools",
+        "website": "https://www.jyrsin.kierrevaline.com",
+        "city": "HANKO POHJOINEN",
+        "registry_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?businessId=0103173-0",
+        "registry_retrieved_at": "2026-09-26T23:30:08.117105+03:00",
+        "website_status": "unavailable",
+        "website_retrieved_at": "2026-09-27T05:01:33.918198+03:00",
+        "website_source_url": "https://www.jyrsin.kierrevaline.com",
+        "evidence": [
+          {
+            "criterion": "Official Registration",
+            "excerpt": "Officially registered Finnish Osakeyhtiö (PRH code 16) in HANKO POHJOINEN under taxonomy TOIMI4 with primary business line 25630 (Manufacture of tools).",
+            "source_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?companyForm=OY&mainBusinessLine=25",
+            "kind": "source_fact"
+          }
+        ],
+        "matched_keywords": [],
+        "missing_criteria": [
+          "cnc",
+          "koneistus",
+          "sorvaus",
+          "jyrsintä",
+          "machining",
+          "metallityöstö"
+        ],
+        "relevance_score": 0.0,
+        "keyword_coverage": "0/6",
+        "financials": {
+          "revenue": null,
+          "ebitda": null
+        },
+        "owner_intent": null,
+        "ownership_status": "unknown",
+        "excluded_reason": null
+      },
+      {
+        "business_id": "0103456-0",
+        "name": "Asetekno Oy",
+        "legal_form": "Osakeyhtiö",
+        "legal_form_code": "16",
+        "status": "Active (Trade Register: Registered)",
+        "industry_code": "25300",
+        "industry_taxonomy": "TOIMI4",
+        "industry_label": "Manufacture of weapons and ammunition",
+        "website": "https://www.asetekno.fi",
+        "city": "HELSINKI",
+        "registry_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?businessId=0103456-0",
+        "registry_retrieved_at": "2026-09-26T23:30:08.117105+03:00",
+        "website_status": "fetched",
+        "website_retrieved_at": "2026-09-26T23:30:10.304621+03:00",
+        "website_source_url": "https://www.asetekno.fi",
+        "evidence": [
+          {
+            "criterion": "Official Registration",
+            "excerpt": "Officially registered Finnish Osakeyhtiö (PRH code 16) in HELSINKI under taxonomy TOIMI4 with primary business line 25300 (Manufacture of weapons and ammunition).",
+            "source_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?companyForm=OY&mainBusinessLine=25",
+            "kind": "source_fact"
+          }
+        ],
+        "matched_keywords": [],
+        "missing_criteria": [
+          "cnc",
+          "koneistus",
+          "sorvaus",
+          "jyrsintä",
+          "machining",
+          "metallityöstö"
+        ],
+        "relevance_score": 0.0,
+        "keyword_coverage": "0/6",
+        "financials": {
+          "revenue": null,
+          "ebitda": null
+        },
+        "owner_intent": null,
+        "ownership_status": "unknown",
+        "excluded_reason": null
+      },
+      {
+        "business_id": "0104890-3",
+        "name": "Meka-Tek H.Sinisalo Oy",
+        "legal_form": "Osakeyhtiö",
+        "legal_form_code": "16",
+        "status": "Active (Trade Register: Registered)",
+        "industry_code": "25990",
+        "industry_taxonomy": "TOIMI4",
+        "industry_label": "Manufacture of other fabricated metal products n.e.c.",
+        "website": null,
+        "city": "HELSINKI",
+        "registry_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?businessId=0104890-3",
+        "registry_retrieved_at": "2026-09-26T23:30:08.117105+03:00",
+        "website_status": "missing",
+        "website_retrieved_at": null,
+        "website_source_url": null,
+        "evidence": [
+          {
+            "criterion": "Official Registration",
+            "excerpt": "Officially registered Finnish Osakeyhtiö (PRH code 16) in HELSINKI under taxonomy TOIMI4 with primary business line 25990 (Manufacture of other fabricated metal products n.e.c.).",
+            "source_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?companyForm=OY&mainBusinessLine=25",
+            "kind": "source_fact"
+          }
+        ],
+        "matched_keywords": [],
+        "missing_criteria": [
+          "cnc",
+          "koneistus",
+          "sorvaus",
+          "jyrsintä",
+          "machining",
+          "metallityöstö"
+        ],
+        "relevance_score": 0.0,
+        "keyword_coverage": "0/6",
+        "financials": {
+          "revenue": null,
+          "ebitda": null
+        },
+        "owner_intent": null,
+        "ownership_status": "unknown",
+        "excluded_reason": null
+      },
+      {
+        "business_id": "0105144-0",
+        "name": "Osavalmiste Tanskanen Oy",
+        "legal_form": "Osakeyhtiö",
+        "legal_form_code": "16",
+        "status": "Active (Trade Register: Registered)",
+        "industry_code": "25630",
+        "industry_taxonomy": "TOIMI4",
+        "industry_label": "Manufacture of tools",
+        "website": null,
+        "city": "VANTAA",
+        "registry_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?businessId=0105144-0",
+        "registry_retrieved_at": "2026-09-26T23:30:08.117105+03:00",
+        "website_status": "missing",
+        "website_retrieved_at": null,
+        "website_source_url": null,
+        "evidence": [
+          {
+            "criterion": "Official Registration",
+            "excerpt": "Officially registered Finnish Osakeyhtiö (PRH code 16) in VANTAA under taxonomy TOIMI4 with primary business line 25630 (Manufacture of tools).",
+            "source_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?companyForm=OY&mainBusinessLine=25",
+            "kind": "source_fact"
+          }
+        ],
+        "matched_keywords": [],
+        "missing_criteria": [
+          "cnc",
+          "koneistus",
+          "sorvaus",
+          "jyrsintä",
+          "machining",
+          "metallityöstö"
+        ],
+        "relevance_score": 0.0,
+        "keyword_coverage": "0/6",
+        "financials": {
+          "revenue": null,
+          "ebitda": null
+        },
+        "owner_intent": null,
+        "ownership_status": "unknown",
+        "excluded_reason": null
+      },
+      {
+        "business_id": "0105482-8",
+        "name": "RM-Hitsaamo Oy",
+        "legal_form": "Osakeyhtiö",
+        "legal_form_code": "16",
+        "status": "Active (Trade Register: Registered)",
+        "industry_code": "25110",
+        "industry_taxonomy": "TOIMI4",
+        "industry_label": "Manufacture of metal structures and parts of structures",
+        "website": null,
+        "city": "HELSINKI",
+        "registry_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?businessId=0105482-8",
+        "registry_retrieved_at": "2026-09-26T23:30:08.117105+03:00",
+        "website_status": "missing",
+        "website_retrieved_at": null,
+        "website_source_url": null,
+        "evidence": [
+          {
+            "criterion": "Official Registration",
+            "excerpt": "Officially registered Finnish Osakeyhtiö (PRH code 16) in HELSINKI under taxonomy TOIMI4 with primary business line 25110 (Manufacture of metal structures and parts of structures).",
+            "source_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?companyForm=OY&mainBusinessLine=25",
+            "kind": "source_fact"
+          }
+        ],
+        "matched_keywords": [],
+        "missing_criteria": [
+          "cnc",
+          "koneistus",
+          "sorvaus",
+          "jyrsintä",
+          "machining",
+          "metallityöstö"
+        ],
+        "relevance_score": 0.0,
+        "keyword_coverage": "0/6",
+        "financials": {
+          "revenue": null,
+          "ebitda": null
+        },
+        "owner_intent": null,
+        "ownership_status": "unknown",
+        "excluded_reason": null
+      },
+      {
+        "business_id": "0106497-0",
+        "name": "Oy Amerim Ab",
+        "legal_form": "Osakeyhtiö",
+        "legal_form_code": "16",
+        "status": "Active (Trade Register: Registered)",
+        "industry_code": "25990",
+        "industry_taxonomy": "TOIMI4",
+        "industry_label": "Manufacture of other fabricated metal products n.e.c.",
+        "website": "https://www.amerim.fi",
+        "city": "INKOO AS",
+        "registry_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?businessId=0106497-0",
+        "registry_retrieved_at": "2026-09-26T23:30:08.117105+03:00",
+        "website_status": "unavailable",
+        "website_retrieved_at": "2026-09-27T05:01:36.799253+03:00",
+        "website_source_url": "https://www.amerim.fi",
+        "evidence": [
+          {
+            "criterion": "Official Registration",
+            "excerpt": "Officially registered Finnish Osakeyhtiö (PRH code 16) in INKOO AS under taxonomy TOIMI4 with primary business line 25990 (Manufacture of other fabricated metal products n.e.c.).",
+            "source_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?companyForm=OY&mainBusinessLine=25",
+            "kind": "source_fact"
+          }
+        ],
+        "matched_keywords": [],
+        "missing_criteria": [
+          "cnc",
+          "koneistus",
+          "sorvaus",
+          "jyrsintä",
+          "machining",
+          "metallityöstö"
+        ],
+        "relevance_score": 0.0,
+        "keyword_coverage": "0/6",
+        "financials": {
+          "revenue": null,
+          "ebitda": null
+        },
+        "owner_intent": null,
+        "ownership_status": "unknown",
+        "excluded_reason": null
+      },
+      {
+        "business_id": "0107019-0",
+        "name": "Best-Hall Oy",
+        "legal_form": "Osakeyhtiö",
+        "legal_form_code": "16",
+        "status": "Active (Trade Register: Registered)",
+        "industry_code": "25110",
+        "industry_taxonomy": "TOIMI4",
+        "industry_label": "Manufacture of metal structures and parts of structures",
+        "website": null,
+        "city": "KÄLVIÄ",
+        "registry_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?businessId=0107019-0",
+        "registry_retrieved_at": "2026-09-26T23:30:08.117105+03:00",
+        "website_status": "missing",
+        "website_retrieved_at": null,
+        "website_source_url": null,
+        "evidence": [
+          {
+            "criterion": "Official Registration",
+            "excerpt": "Officially registered Finnish Osakeyhtiö (PRH code 16) in KÄLVIÄ under taxonomy TOIMI4 with primary business line 25110 (Manufacture of metal structures and parts of structures).",
+            "source_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?companyForm=OY&mainBusinessLine=25",
+            "kind": "source_fact"
+          }
+        ],
+        "matched_keywords": [],
+        "missing_criteria": [
+          "cnc",
+          "koneistus",
+          "sorvaus",
+          "jyrsintä",
+          "machining",
+          "metallityöstö"
+        ],
+        "relevance_score": 0.0,
+        "keyword_coverage": "0/6",
+        "financials": {
+          "revenue": null,
+          "ebitda": null
+        },
+        "owner_intent": null,
+        "ownership_status": "unknown",
+        "excluded_reason": null
+      },
+      {
+        "business_id": "0107585-6",
+        "name": "Elektrorakenne Oy",
+        "legal_form": "Osakeyhtiö",
+        "legal_form_code": "16",
+        "status": "Active (Trade Register: Registered)",
+        "industry_code": "25990",
+        "industry_taxonomy": "TOIMI4",
+        "industry_label": "Manufacture of other fabricated metal products n.e.c.",
+        "website": "https://www.elektrorakenne.fi",
+        "city": "TUUSULA",
+        "registry_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?businessId=0107585-6",
+        "registry_retrieved_at": "2026-09-26T23:30:08.117105+03:00",
+        "website_status": "fetched",
+        "website_retrieved_at": "2026-09-27T05:01:36.977594+03:00",
+        "website_source_url": "https://www.elektrorakenne.fi",
+        "evidence": [
+          {
+            "criterion": "Official Registration",
+            "excerpt": "Officially registered Finnish Osakeyhtiö (PRH code 16) in TUUSULA under taxonomy TOIMI4 with primary business line 25990 (Manufacture of other fabricated metal products n.e.c.).",
+            "source_url": "https://avoindata.prh.fi/opendata-ytj-api/v3/companies?companyForm=OY&mainBusinessLine=25",
+            "kind": "source_fact"
+          }
+        ],
+        "matched_keywords": [],
+        "missing_criteria": [
+          "cnc",
+          "koneistus",
+          "sorvaus",
+          "jyrsintä",
+          "machining",
+          "metallityöstö"
+        ],
+        "relevance_score": 0.0,
+        "keyword_coverage": "0/6",
+        "financials": {
+          "revenue": null,
+          "ebitda": null
+        },
+        "owner_intent": null,
+        "ownership_status": "unknown",
+        "excluded_reason": null
+      }
+    ],
+    "warnings": [
+      "Official PRH classification filter applied: mainBusinessLine=25. Industry code suggestions and keywords represent advisor assumptions, never buyer stated facts."
+    ],
+    "stats": {
+      "companies_found": 10763,
+      "returned_companies": 10,
+      "accessible_sites": 3,
+      "matched_evidence": 1,
+      "flags": 0,
+      "elapsed_seconds": 44.95,
+      "planner_mode": "Gemini 3.8 Flash (AGY CLI Planner)"
+    }
+  },
+  "stats": {
+    "companies_found": 10763,
+    "returned_companies": 10,
+    "accessible_sites": 3,
+    "matched_evidence": 1,
+    "flags": 0,
+    "elapsed_seconds": 44.95,
+    "planner_mode": "Gemini 3.8 Flash (AGY CLI Planner)"
+  },
+  "error": null,
+  "elapsed_seconds": 44.95
+}
