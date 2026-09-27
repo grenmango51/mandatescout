@@ -19,13 +19,14 @@ Open http://127.0.0.1:8787. Keep the terminal open. Ctrl+C stops the server.
 
 Buyer keywords and industry codes are analyst suggestions. Website keyword coverage is not buyer fit. Corporate-change flags are text heuristics requiring review, not ownership determinations. PRH name search includes auxiliary and historical names; sector filters help narrow the results. Searches are bounded, not exhaustive market scans.
 
-## Included
+## Deliverables & Links
 
-- `product/`: Python backend, browser interface, source cache and tests.
-- `deliverables/mandatescout/pitch.html`: six-slide browser presentation; arrow keys navigate, S shows notes.
-- `DEMO.md`: 90-second walkthrough.
-- `deliverables/mandatescout/example-brief.md`: actual retrieved research example, not a qualified acquisition target.
-- `deliverables/mandatescout/PARENT_QA.md`: verified checks and limitations.
+- **Slide Deck (Google Drive)**: [View Pitch Deck on Google Drive](https://drive.google.com/file/d/1lBYdjWOsrnf6CHlG2RDS3NDbhxM1f-to/view?usp=sharing) (or open `deliverables/mandatescout/pitch.html` locally)
+- **Product Walkthrough Video (Google Drive)**: [Watch 90-sec Walkthrough on Google Drive](https://drive.google.com/file/d/1mehGth3GOlqoJ7cgYkk30KPs5dNRHWOS/view?usp=sharing) (or watch `deliverables/MandateScout-Walkthrough.webm`)
+- **Screenshots Gallery**: 5 authentic in-app workflow screenshots in `screenshots/`
+- **Demo Script**: `DEMO.md`
+- **Example Research Brief**: `deliverables/mandatescout/example-brief.md`
+- **QA & Epistemic Boundaries**: `deliverables/mandatescout/PARENT_QA.md`
 
 ## Data boundaries
 
